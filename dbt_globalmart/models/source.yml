@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: globalmart
+    description: A clone from snowflake warehouse
+    database: raw
+    schema: globalmart
+    loaded_at_field: loaded_at
+
+    tables:
+      - name: src_customers
+        description': Raw data for customers
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+
+      - name: src_orders
+        description: Raw data for orders
+        freshness:
+          warn_after: {count: 12, period: hour}
+
+      - name: src_product
+        description: Raw data for products
+        freshness:
+          warn_after: {count: 12, period: hour}

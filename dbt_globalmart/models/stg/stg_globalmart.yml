@@ -1,0 +1,84 @@
+models:
+  - name: stg_orders
+    description: "Staging model containing transformed order data with additional fields for analysis."
+    columns:
+      - name: sk_orders
+        data_type: varchar
+        description: "Surrogate key for the orders table."
+        data_tests:
+          - unique:
+              config:
+                severity: error
+          - not_null
+          - dbt_expectations.expect_column_to_exist:
+              config:
+                severity: warn
+
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: string
+              config:
+                severity: warn
+
+      - name: orderid
+        data_type: number
+        description: "Unique identifier for each order."
+
+      - name: orderdate
+        data_type: varchar
+        description: "The date when the order was placed, stored as a string."
+
+      - name: shipdate
+        data_type: varchar
+        description: "The date when the order was shipped, stored as a string."
+
+      - name: shipmode
+        data_type: varchar
+        description: '{{ doc("shipmode")}}'
+
+      - name: customerid
+        data_type: varchar
+        description: "Unique identifier for the customer who placed the order."
+
+      - name: productid
+        data_type: varchar
+        description: "Unique identifier for the product in the order."
+
+      - name: ordersellingprice
+        data_type: number
+        description: "The selling price of the product in the order."
+
+      - name: ordercostprice
+        data_type: number
+        description: "The cost price of the product in the order."
+
+      - name: customername
+        data_type: varchar
+        description: "Name of the customer who placed the order."
+
+      - name: segment
+        data_type: varchar
+        description: "Market segment to which the customer belongs."
+
+      - name: country
+        data_type: varchar
+        description: "Country where the customer is located."
+
+      - name: category
+        data_type: varchar
+        description: "The category of the product."
+
+      - name: productname
+        data_type: varchar
+        description: "Name of the product ordered."
+
+      - name: subcategory
+        data_type: varchar
+        description: "The subcategory of the product."
+
+      - name: orderprofit
+        data_type: number
+        description: "Profit earned from the order, calculated as the difference between selling price and cost price."
+
+      - name: markup
+        data_type: number
+        description: "The markup percentage calculated based on the cost and selling prices."
